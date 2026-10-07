@@ -1,0 +1,24 @@
+name: Security & Logic Validation (CI)
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  automated-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Inisialisasi Environment Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip' # Optimasi kecepatan unduhan dependensi
+
+      - name: Instalasi Dependensi
+        run: pip install -r requirements.txt
+
+      - name: Eksekusi Unit Test
+        run: pytest test_main.py
