@@ -1,21 +1,22 @@
 name: Robot Pengecek Kode Python
 
-on: [push] # Robot ini akan jalan setiap kali Anda melakukan 'push' (upload kode)
+on: [push]
 
 jobs:
   cek-error:
-    runs-on: ubuntu-latest # Robot menggunakan sistem operasi Linux
+    runs-on: ubuntu-latest
     steps:
       - name: Ambil kode dari repository
         uses: actions/checkout@v4
 
-      - name: Siapkan Python
+      - name: Siapkan Python dengan Cache
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+          cache: 'pip' # ⬅️ Ini fitur rahasianya
 
-      - name: Install Pytest
-        run: pip install pytest
+      - name: Install dependencies
+        run: pip install -r requirements.txt # ⬅️ Membaca dari file
 
       - name: Jalankan Tes
-        run: pytest test_app.py # Perintah untuk menjalankan file test_app.py
+        run: pytest test_app.py
